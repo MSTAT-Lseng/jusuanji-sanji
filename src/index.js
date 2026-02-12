@@ -13,6 +13,8 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      // 即使按下快捷键，也无法打开开发者工具
+      devTools: false
     },
   });
 
