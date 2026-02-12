@@ -237,6 +237,37 @@ h2 {
   transform: scale(0.94);
 }
 
+input[type='text'] {
+  min-height: 38px;
+  border: 1px solid #9bccef;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #1d3557;
+  background: #ffffff;
+  appearance: auto;
+  -webkit-appearance: auto;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+input[type='text']::placeholder {
+  color: #7aa8cb;
+}
+
+input[type='text']:hover {
+  border-color: #7fbbe8;
+}
+
+input[type='text']:focus-visible {
+  outline: none;
+  border-color: #4a9bd8;
+  box-shadow: 0 0 0 3px rgba(74, 155, 216, 0.2);
+}
+
 .option-text {
   line-height: 1.5;
   white-space: pre-wrap;
