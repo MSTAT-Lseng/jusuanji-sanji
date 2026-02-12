@@ -2,11 +2,43 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Hello World!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>答题程序</title>
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
+    <div class="layout">
+      <header class="panel top">
+        <h1>题库练习</h1>
+        <div id="progress" class="progress">加载中...</div>
+      </header>
+
+      <section class="panel">
+        <div class="meta">
+          <span id="question-id">ID: -</span>
+          <span id="question-type">类型: -</span>
+        </div>
+        <article id="question-title" class="question-title"></article>
+      </section>
+
+      <section id="options-panel" class="panel">
+        <h2>选项</h2>
+        <form id="options-form" class="options-form"></form>
+      </section>
+
+      <section class="panel">
+        <div class="actions">
+          <button id="prev-btn" type="button">上一题</button>
+          <button id="next-btn" type="button">下一题</button>
+          <button id="submit-btn" type="button">提交答案</button>
+          <button id="show-analysis-btn" type="button">显示解析</button>
+        </div>
+        <div id="result" class="result"></div>
+        <h2>解析</h2>
+        <pre id="analysis" class="analysis"></pre>
+      </section>
+    </div>
+
+    <script src="renderer.js" defer></script>
   </body>
 </html>
