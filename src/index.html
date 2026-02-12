@@ -10,7 +10,23 @@
     <div class="layout">
       <header class="panel top">
         <h1>网络技术试题</h1>
-        <div id="progress" class="progress">加载中...</div>
+        <div class="top-right">
+          <div
+            id="progress"
+            class="progress"
+            role="button"
+            tabindex="0"
+            aria-label="点击跳转到指定题号"
+            title="点击跳转到指定题号"
+          >
+            加载中...
+          </div>
+          <div id="jump-box" class="jump-box hidden">
+            <input id="jump-input" class="jump-input" type="number" min="1" inputmode="numeric" />
+            <button id="jump-go-btn" type="button">跳转</button>
+            <button id="jump-cancel-btn" type="button">取消</button>
+          </div>
+        </div>
       </header>
 
       <section class="panel">

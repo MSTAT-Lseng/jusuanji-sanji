@@ -7,6 +7,10 @@ const optionsPanelEl = document.getElementById('options-panel');
 const optionsFormEl = document.getElementById('options-form');
 const resultEl = document.getElementById('result');
 const analysisEl = document.getElementById('analysis');
+const jumpBoxEl = document.getElementById('jump-box');
+const jumpInputEl = document.getElementById('jump-input');
+const jumpGoBtn = document.getElementById('jump-go-btn');
+const jumpCancelBtn = document.getElementById('jump-cancel-btn');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
 const submitBtn = document.getElementById('submit-btn');
@@ -212,11 +216,45 @@ function submitAnswer() {
   );
 }
 
+function hideJumpBox() {
+  jumpBoxEl.classList.add('hidden');
+}
+
+function showJumpBox() {
+  if (!state.total) {
+    return;
+  }
+
+  jumpBoxEl.classList.remove('hidden');
+  jumpInputEl.value = String(state.currentIndex + 1);
+  jumpInputEl.focus();
+  jumpInputEl.select();
+}
+
+function jumpToQuestionByInput() {
+  const value = jumpInputEl.value.trim();
+  if (!/^\d+$/.test(value)) {
+    setResultText('请输入有效题号。');
+    return;
+  }
+
+  const targetIndex = Number.parseInt(value, 10) - 1;
+  if (targetIndex < 0 || targetIndex >= state.total) {
+    setResultText(`题号超出范围，请输入 1-${state.total}。`);
+    return;
+  }
+
+  hideJumpBox();
+  loadQuestion(targetIndex);
+}
+
 async function init() {
   state.total = await window.quizAPI.getQuestionCount();
   if (!state.total) {
     progressEl.textContent = '题库为空';
-    questionTypeEl.textContent = '类型: -';
+    if (questionTypeEl) {
+      questionTypeEl.textContent = '类型: -';
+    }
     questionTitleEl.textContent = '未读取到任何题目。';
     submitBtn.disabled = true;
     showAnalysisBtn.disabled = true;
@@ -242,5 +280,24 @@ nextBtn.addEventListener('click', () => {
 
 submitBtn.addEventListener('click', submitAnswer);
 showAnalysisBtn.addEventListener('click', showAnalysis);
+progressEl.addEventListener('click', showJumpBox);
+progressEl.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    showJumpBox();
+  }
+});
+jumpGoBtn.addEventListener('click', jumpToQuestionByInput);
+jumpCancelBtn.addEventListener('click', hideJumpBox);
+jumpInputEl.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    jumpToQuestionByInput();
+  }
+  if (event.key === 'Escape') {
+    event.preventDefault();
+    hideJumpBox();
+  }
+});
 
 init();
