@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('node:path');
 const fs = require('node:fs');
 const Database = require('better-sqlite3');
@@ -77,6 +77,7 @@ const createWindow = () => {
 };
 
 app.whenReady().then(() => {
+  Menu.setApplicationMenu(null);
   initDatabase();
   registerIpcHandlers();
   createWindow();

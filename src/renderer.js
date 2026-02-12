@@ -1,7 +1,6 @@
 'use strict';
 
 const progressEl = document.getElementById('progress');
-const questionIdEl = document.getElementById('question-id');
 const questionTypeEl = document.getElementById('question-type');
 const questionTitleEl = document.getElementById('question-title');
 const optionsPanelEl = document.getElementById('options-panel');
@@ -123,14 +122,12 @@ function renderOptions(question) {
   submitBtn.disabled = false;
 
   if (isShortAnswer) {
-    questionTypeEl.textContent = '类型: 简答题';
     setResultText('该题为简答题，不进行自动判题。');
     return;
   }
 
   const isMultipleChoice = answerIds.length > 1;
   const inputType = isMultipleChoice ? 'checkbox' : 'radio';
-  questionTypeEl.textContent = isMultipleChoice ? '类型: 多选题' : '类型: 单选题';
 
   if (options.length === 0) {
     setResultText('该题未找到可用选项。');
@@ -169,7 +166,6 @@ async function loadQuestion(index) {
   state.currentQuestion = question;
 
   progressEl.textContent = `第 ${state.currentIndex + 1} 题 / 共 ${state.total} 题`;
-  questionIdEl.textContent = `ID: ${question.id}`;
 
   questionTitleEl.innerHTML = question.title || '(无题目内容)';
   analysisEl.textContent = '';
