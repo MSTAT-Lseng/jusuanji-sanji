@@ -237,9 +237,9 @@ h2 {
   transform: scale(0.94);
 }
 
-input[type='text'] {
+input:not([type="checkbox"]):not([type="radio"]) {
   min-height: 38px;
-  border: 1px solid #9bccef;
+  border: 1px solid #59788f;
   border-radius: 8px;
   padding: 8px 10px;
   font-size: 14px;
@@ -248,21 +248,23 @@ input[type='text'] {
   background: #ffffff;
   appearance: auto;
   -webkit-appearance: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease,
     background-color 0.2s ease;
 }
 
-input[type='text']::placeholder {
+input:not([type="checkbox"]):not([type="radio"])::placeholder {
   color: #7aa8cb;
 }
 
-input[type='text']:hover {
-  border-color: #7fbbe8;
+input:not([type="checkbox"]):not([type="radio"]):hover {
+  border-color: #39566c;
 }
 
-input[type='text']:focus-visible {
+input:not([type="checkbox"]):not([type="radio"]):focus-visible {
   outline: none;
   border-color: #4a9bd8;
   box-shadow: 0 0 0 3px rgba(74, 155, 216, 0.2);
