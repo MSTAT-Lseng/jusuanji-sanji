@@ -388,6 +388,38 @@ button:disabled {
   }
 }
 
+@media (min-width: 1080px) {
+  .layout {
+    max-width: 1220px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(340px, 1fr);
+    grid-template-areas:
+      'top top'
+      'question answer'
+      'options answer';
+    gap: 14px;
+    align-items: start;
+  }
+
+  .layout > header.top {
+    grid-area: top;
+  }
+
+  .layout > section:nth-of-type(1) {
+    grid-area: question;
+  }
+
+  .layout > section:nth-of-type(2) {
+    grid-area: options;
+  }
+
+  .layout > section:nth-of-type(3) {
+    grid-area: answer;
+    position: sticky;
+    top: 14px;
+  }
+}
+
 @keyframes panel-in {
   from {
     opacity: 0;
