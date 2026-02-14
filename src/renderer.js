@@ -105,6 +105,22 @@ function setResultText(text) {
   resultEl.textContent = text || '';
 }
 
+function replayAnimation(element, className) {
+  if (!element) {
+    return;
+  }
+  element.classList.remove(className);
+  void element.offsetWidth;
+  element.classList.add(className);
+}
+
+function animateQuestionContent() {
+  replayAnimation(questionTitleEl, 'content-refresh');
+  replayAnimation(optionsPanelEl, 'content-refresh');
+  replayAnimation(resultEl, 'content-refresh');
+  replayAnimation(analysisEl, 'content-refresh');
+}
+
 function updateButtonState() {
   prevBtn.disabled = state.currentIndex <= 0;
   nextBtn.disabled = state.currentIndex >= state.total - 1;
@@ -175,6 +191,7 @@ async function loadQuestion(index) {
   analysisEl.textContent = '';
 
   renderOptions(question);
+  animateQuestionContent();
   updateButtonState();
 }
 

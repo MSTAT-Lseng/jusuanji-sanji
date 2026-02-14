@@ -1,3 +1,18 @@
+:root {
+  --bg-main: #f7f7f8;
+  --bg-soft: #fcfcfd;
+  --surface: #ffffff;
+  --surface-muted: #f5f5f6;
+  --text-main: #1a1c20;
+  --text-subtle: #5b616e;
+  --border: #e6e8ec;
+  --border-strong: #d8dbe1;
+  --accent: #2f2f35;
+  --shadow-soft: 0 10px 26px rgba(18, 22, 32, 0.06);
+  --shadow-layer: 0 2px 10px rgba(19, 24, 31, 0.06);
+  --ring: 0 0 0 3px rgba(43, 47, 54, 0.12);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -7,26 +22,40 @@ body {
   min-height: 100vh;
   font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
   background:
-    radial-gradient(circle at top right, #dff0ff 0%, #dff0ff 24%, transparent 54%),
-    linear-gradient(180deg, #edf7ff 0%, #eaf4ff 45%, #e3f0ff 100%);
-  color: #1d3557;
+    radial-gradient(circle at 86% 8%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 45%),
+    radial-gradient(circle at 12% 90%, rgba(242, 243, 246, 0.95) 0%, rgba(242, 243, 246, 0) 36%),
+    linear-gradient(180deg, var(--bg-soft) 0%, var(--bg-main) 100%);
+  color: var(--text-main);
 }
 
 .layout {
   width: min(980px, 100%);
   margin: 0 auto;
-  padding: 20px;
+  padding: 22px;
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
 .panel {
-  background: #f7fcff;
-  border: 1px solid #c8e6ff;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfc 100%);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
-  box-shadow: 0 8px 24px rgba(32, 107, 163, 0.08);
+  box-shadow: var(--shadow-soft);
+  animation: panel-in 0.5s ease both;
+}
+
+.panel:nth-of-type(2) {
+  animation-delay: 0.08s;
+}
+
+.panel:nth-of-type(3) {
+  animation-delay: 0.14s;
+}
+
+.panel:nth-of-type(4) {
+  animation-delay: 0.2s;
 }
 
 .top {
@@ -35,7 +64,7 @@ body {
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  background: linear-gradient(120deg, #f4fbff 0%, #e8f5ff 100%);
+  background: linear-gradient(120deg, #ffffff 0%, #f4f4f6 100%);
 }
 
 .top-right {
@@ -53,77 +82,83 @@ h2 {
 
 h1 {
   font-size: 21px;
-  color: #0b4f80;
+  color: #15171b;
+  letter-spacing: 0.2px;
 }
 
 h2 {
   font-size: 16px;
   margin-bottom: 10px;
-  color: #175f93;
+  color: #303540;
 }
 
 .progress {
   font-size: 14px;
-  color: #20658f;
-  background: #ffffff;
-  border: 1px solid #c8e6ff;
+  color: #2f3440;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
   border-radius: 999px;
   padding: 5px 12px;
   cursor: pointer;
   user-select: none;
+  box-shadow: var(--shadow-layer);
   transition:
     background 0.2s ease,
     border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
 }
 
 .progress:hover {
-  background: #f4fbff;
-  border-color: #97caef;
+  background: var(--surface-muted);
+  border-color: #c8cdd6;
+  transform: translateY(-1px);
 }
 
 .progress:focus-visible {
   outline: none;
-  border-color: #4a9bd8;
-  box-shadow: 0 0 0 3px rgba(74, 155, 216, 0.22);
+  border-color: #8f95a1;
+  box-shadow: var(--ring);
 }
 
 .jump-box {
   display: flex;
   align-items: center;
   gap: 6px;
+  animation: rise-in 0.2s ease both;
 }
 
 .jump-input {
   width: 96px;
-  border: 1px solid #9bccef;
+  border: 1px solid #cfd4dc;
   border-radius: 8px;
   padding: 6px 10px;
-  color: #1d3557;
+  color: var(--text-main);
   background: #ffffff;
 }
 
 .jump-input:focus-visible {
   outline: none;
-  border-color: #4a9bd8;
-  box-shadow: 0 0 0 3px rgba(74, 155, 216, 0.22);
+  border-color: #8f95a1;
+  box-shadow: var(--ring);
 }
 
 .meta {
   display: flex;
   gap: 14px;
   margin-bottom: 10px;
-  color: #3d6f94;
+  color: var(--text-subtle);
   font-size: 14px;
 }
 
 .question-title {
   line-height: 1.6;
   font-size: 16px;
-  background: #ffffff;
-  border: 1px solid #d2e9ff;
+  background: linear-gradient(180deg, #ffffff 0%, #f8f8fa 100%);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 14px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .question-title img {
@@ -140,38 +175,42 @@ h2 {
   display: flex;
   gap: 10px;
   align-items: flex-start;
-  border: 1px solid #d2e9ff;
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 10px;
   background: #ffffff;
   cursor: pointer;
+  box-shadow: 0 1px 2px rgba(20, 24, 31, 0.04);
   transition:
     background 0.2s ease,
     border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+  animation: rise-in 0.28s ease both;
 }
 
 .option-item:hover {
-  background: #f2f9ff;
-  border-color: #9ecff4;
+  background: #f8f8f9;
+  border-color: #cfd4dc;
+  transform: translateY(-1px);
 }
 
 .option-item:focus-within {
-  border-color: #4a9bd8;
-  box-shadow: 0 0 0 3px rgba(74, 155, 216, 0.2);
+  border-color: #8f95a1;
+  box-shadow: var(--ring);
 }
 
 .option-item:has(input:checked) {
-  background: #eaf6ff;
-  border-color: #5ea8df;
-  box-shadow: 0 4px 12px rgba(53, 130, 189, 0.14);
+  background: #f4f4f6;
+  border-color: #aeb4be;
+  box-shadow: 0 6px 16px rgba(24, 30, 40, 0.1);
 }
 
 .option-item input {
   margin-top: 1px;
   width: 18px;
   height: 18px;
-  border: 2px solid #7db9e7;
+  border: 2px solid #9198a3;
   background: #ffffff;
   appearance: none;
   -webkit-appearance: none;
@@ -216,8 +255,8 @@ h2 {
 }
 
 .option-item input:checked {
-  background: #2f86c8;
-  border-color: #2f86c8;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .option-item input[type='radio']:checked::before {
@@ -229,7 +268,7 @@ h2 {
 }
 
 .option-item input:focus-visible {
-  outline: 2px solid #1f78bd;
+  outline: 2px solid #6a707c;
   outline-offset: 2px;
 }
 
@@ -237,14 +276,14 @@ h2 {
   transform: scale(0.94);
 }
 
-input:not([type="checkbox"]):not([type="radio"]) {
+input:not([type='checkbox']):not([type='radio']) {
   min-height: 38px;
-  border: 1px solid #59788f;
+  border: 1px solid #b6bcc7;
   border-radius: 8px;
   padding: 8px 10px;
   font-size: 14px;
   line-height: 1.4;
-  color: #1d3557;
+  color: var(--text-main);
   background: #ffffff;
   appearance: auto;
   -webkit-appearance: auto;
@@ -256,18 +295,18 @@ input:not([type="checkbox"]):not([type="radio"]) {
     background-color 0.2s ease;
 }
 
-input:not([type="checkbox"]):not([type="radio"])::placeholder {
-  color: #7aa8cb;
+input:not([type='checkbox']):not([type='radio'])::placeholder {
+  color: #9198a3;
 }
 
-input:not([type="checkbox"]):not([type="radio"]):hover {
-  border-color: #39566c;
+input:not([type='checkbox']):not([type='radio']):hover {
+  border-color: #8f95a1;
 }
 
-input:not([type="checkbox"]):not([type="radio"]):focus-visible {
+input:not([type='checkbox']):not([type='radio']):focus-visible {
   outline: none;
-  border-color: #4a9bd8;
-  box-shadow: 0 0 0 3px rgba(74, 155, 216, 0.2);
+  border-color: #7e8591;
+  box-shadow: var(--ring);
 }
 
 .option-text {
@@ -282,22 +321,25 @@ input:not([type="checkbox"]):not([type="radio"]):focus-visible {
 }
 
 button {
-  border: 1px solid #8cc8f2;
+  border: 1px solid #c9ced6;
   border-radius: 10px;
-  background: linear-gradient(180deg, #ffffff 0%, #ecf7ff 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #f0f1f3 100%);
   padding: 8px 14px;
   cursor: pointer;
   font-size: 14px;
-  color: #135b8f;
+  color: #1f232b;
+  box-shadow: 0 2px 8px rgba(16, 20, 28, 0.06);
   transition:
     background 0.2s ease,
     border-color 0.2s ease,
-    transform 0.1s ease;
+    transform 0.12s ease,
+    box-shadow 0.2s ease;
 }
 
 button:hover {
-  background: linear-gradient(180deg, #f7fcff 0%, #e1f2ff 100%);
-  border-color: #6fb5e7;
+  background: linear-gradient(180deg, #ffffff 0%, #eceef1 100%);
+  border-color: #aeb4be;
+  box-shadow: 0 4px 12px rgba(16, 20, 28, 0.1);
 }
 
 button:active {
@@ -313,20 +355,68 @@ button:disabled {
   margin-top: 12px;
   min-height: 24px;
   white-space: pre-wrap;
+  color: #333843;
 }
 
 .analysis {
   margin: 0;
   white-space: pre-wrap;
   line-height: 1.5;
-  color: #244c70;
-  background: #f0f8ff;
-  border: 1px solid #cfe9ff;
+  color: #353b45;
+  background: linear-gradient(180deg, #fafafb 0%, #f2f3f5 100%);
+  border: 1px solid #d9dde3;
   border-radius: 10px;
   padding: 12px;
   min-height: 84px;
 }
 
+.content-refresh {
+  animation: content-refresh 0.34s ease both;
+}
+
 .hidden {
   display: none;
+}
+
+@media (max-width: 720px) {
+  .layout {
+    padding: 14px;
+  }
+
+  .panel {
+    padding: 13px;
+  }
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.996);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes content-refresh {
+  from {
+    opacity: 0.12;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
