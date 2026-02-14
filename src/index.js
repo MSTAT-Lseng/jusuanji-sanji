@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const path = require('node:path');
 const fs = require('node:fs');
 const Database = require('better-sqlite3');
@@ -11,17 +11,46 @@ if (require('electron-squirrel-startup')) {
 let db;
 let countStatement;
 let questionByIndexStatement;
+let startupFailed = false;
+
+function logStartupError(error) {
+  const detail = error && error.stack ? error.stack : String(error);
+  const line = `[${new Date().toISOString()}] ${detail}\n`;
+  try {
+    const logPath = path.join(app.getPath('userData'), 'startup-error.log');
+    fs.appendFileSync(logPath, line, 'utf8');
+  } catch {
+    // ignore logging errors
+  }
+}
+
+function reportStartupError(error) {
+  startupFailed = true;
+  logStartupError(error);
+  const message = error && error.message ? error.message : String(error);
+  dialog.showErrorBox(
+    '应用启动失败',
+    `启动时发生错误: ${message}\n\n已写入日志: ${path.join(app.getPath('userData'), 'startup-error.log')}`
+  );
+}
 
 function resolveDatabasePath() {
   const candidates = [
-    path.join(app.getAppPath(), 'resources', 'questions.db'),
-    path.join(process.cwd(), 'resources', 'questions.db'),
     path.join(process.resourcesPath, 'questions.db'),
     path.join(process.resourcesPath, 'resources', 'questions.db'),
+    path.join(process.cwd(), 'resources', 'questions.db'),
+    path.join(app.getAppPath(), 'resources', 'questions.db'),
     path.join(__dirname, '..', 'resources', 'questions.db')
   ];
 
-  const dbPath = candidates.find((candidate) => fs.existsSync(candidate));
+  const dbPath = candidates.find((candidate) => {
+    if (!fs.existsSync(candidate)) {
+      return false;
+    }
+
+    // Native sqlite cannot open files from inside app.asar.
+    return !candidate.includes(`${path.sep}app.asar${path.sep}`);
+  });
   if (!dbPath) {
     throw new Error('questions.db not found in resources directory');
   }
@@ -77,13 +106,19 @@ const createWindow = () => {
 };
 
 app.whenReady().then(() => {
-  Menu.setApplicationMenu(null);
-  initDatabase();
-  registerIpcHandlers();
-  createWindow();
+  try {
+    Menu.setApplicationMenu(null);
+    initDatabase();
+    registerIpcHandlers();
+    createWindow();
+  } catch (error) {
+    reportStartupError(error);
+    app.quit();
+    return;
+  }
 
   app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
+    if (!startupFailed && BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
   });
@@ -100,4 +135,14 @@ app.on('before-quit', () => {
     db.close();
     db = null;
   }
+});
+
+process.on('uncaughtException', (error) => {
+  reportStartupError(error);
+  app.quit();
+});
+
+process.on('unhandledRejection', (reason) => {
+  reportStartupError(reason);
+  app.quit();
 });
