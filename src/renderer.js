@@ -130,6 +130,16 @@ function getSelectedAnswerIds() {
   return [...optionsFormEl.querySelectorAll('input:checked')].map((input) => input.value);
 }
 
+function toDisplayOptionId(id) {
+  const map = {
+    '1': 'A',
+    '2': 'B',
+    '4': 'C',
+    '8': 'D'
+  };
+  return map[id] || id;
+}
+
 function renderOptions(question) {
   const options = parseSourceAttach(question.sourceAttach);
   const answerIds = decodeAnswerIds(question.answer, options);
@@ -168,7 +178,7 @@ function renderOptions(question) {
 
     const text = document.createElement('span');
     text.className = 'option-text';
-    text.textContent = `${option.id}. ${option.text}`;
+    text.textContent = `${toDisplayOptionId(option.id)}. ${option.text}`;
 
     label.appendChild(input);
     label.appendChild(text);
@@ -225,8 +235,8 @@ function submitAnswer() {
   const isCorrect =
     expectedSet.size === selectedSet.size && [...selectedSet].every((id) => expectedSet.has(id));
 
-  const correctAnswerText = expected.join(', ');
-  const selectedAnswerText = [...selectedSet].join(', ');
+  const correctAnswerText = expected.map(toDisplayOptionId).join(', ');
+  const selectedAnswerText = [...selectedSet].map(toDisplayOptionId).join(', ');
 
   setResultText(
     `${isCorrect ? '回答正确' : '回答错误'}\n你的答案: ${selectedAnswerText}\n正确答案: ${correctAnswerText}`
