@@ -296,6 +296,18 @@ nextBtn.addEventListener('click', () => {
 });
 
 submitBtn.addEventListener('click', submitAnswer);
+optionsFormEl.addEventListener('change', () => {
+  if (!state.currentQuestion || state.currentQuestion.answer === null) {
+    return;
+  }
+
+  if (getSelectedAnswerIds().length === 0) {
+    setResultText('');
+    return;
+  }
+
+  submitAnswer();
+});
 showAnalysisBtn.addEventListener('click', showAnalysis);
 progressEl.addEventListener('click', showJumpBox);
 progressEl.addEventListener('keydown', (event) => {
