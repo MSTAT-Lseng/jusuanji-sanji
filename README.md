@@ -2,6 +2,8 @@
 
 计算机三级网络技术考试题库。本项目使用 `Electron` 制作。题库来自无忧考吧。共 `1666` 道题。适合考前复习。
 
+**计算机四级【网络工程师】题库发布：https://github.com/MSTAT-Lseng/jisuanji-siji**
+
 ## 项目截图
 
 <img src="https://files.seeusercontent.com/2026/02/15/0xRc/QQ20260215-101716.png" alt="QQ20260215-101716.png" width="700" /> <img src="https://files.seeusercontent.com/2026/02/15/b9Yd/QQ20260215-101748.png" alt="QQ20260215-101748.png" width="700" /> <img src="https://files.seeusercontent.com/2026/02/15/v5uZ/QQ20260215-101808.png" alt="QQ20260215-101808.png" width="700" />
